@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Parcel Sandbox</title>
+    <meta charset="UTF-8" />
+    <style>
+      .container {
+        height: 400px;
+        background: black;
+        overflow: hidden;
+      }
+
+      .carousel {
+        display: flex;
+        height: 100%;
+        transition: transform 1s;
+      }
+      .carousel div {
+        flex: 0 0 33.3%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="carousel"></div>
+    </div>
+
+    <script>
+      const pageSize = 3;
+      const carousel = document.querySelector('.carousel');
+      const elements = [
+        'red',
+        'green',
+        'blue',
+        'yellow',
+        'pink',
+        'cyan',
+        'brown',
+        'violet',
+        'magenta',
+      ];
+
+      elements.forEach((el) => {
+        const node = document.createElement('div');
+        node.style.background = el;
+        carousel.appendChild(node);
+      });
+
+      setInterval(() => {
+        carousel.style.transition = 'transform 1s';
+        carousel.style.transform = `translateX(${-100}%)`;
+      }, 2000);
+
+      carousel.addEventListener('transitionend', () => {
+        let removedChild = [];
+        for (let i = 0; i < pageSize; i++) {
+          const children = carousel.children;
+          removedChild.push(children[i]);
+        }
+        carousel.append(...removedChild);
+        carousel.style.transition = 'transform 0s';
+        carousel.style.transform = 'translateX(0%)';
+      });
+    </script>
+  </body>
+</html>
